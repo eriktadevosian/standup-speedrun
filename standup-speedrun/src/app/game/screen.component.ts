@@ -19,7 +19,12 @@ import { getRandomSprite, PixelSprite } from '../shared/sprites/pixel-sprites';
     <div class="screen">
       <div class="top-bar">
         <h1>STANDUP SPEEDRUN</h1>
-        <app-timer [secondsLeft]="gameState.timer()" />
+        <div class="top-bar-right">
+          <button class="copy-btn" (click)="copyLink()" [class.copied]="copied()">
+            {{ copied() ? '✓ СКОПИРОВАНО' : '🔗 ССЫЛКА' }}
+          </button>
+          <app-timer [secondsLeft]="gameState.timer()" />
+        </div>
       </div>
       <div class="main">
         <div class="game-area">
@@ -58,6 +63,10 @@ import { getRandomSprite, PixelSprite } from '../shared/sprites/pixel-sprites';
   styles: [`
     .screen { height: 100vh; display: flex; flex-direction: column; padding: 24px; background: #1a1a2e; }
     .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .top-bar-right { display: flex; align-items: center; gap: 16px; }
+    .copy-btn { font-family: 'Press Start 2P', monospace; font-size: 10px; color: #2ecc71; background: transparent; border: 2px solid #2ecc71; padding: 8px 12px; cursor: pointer; transition: all 0.2s; }
+    .copy-btn:hover { background: #2ecc71; color: #1a1a2e; }
+    .copy-btn.copied { border-color: #f1c40f; color: #f1c40f; }
     h1 { font-family: 'Press Start 2P', monospace; font-size: 20px; color: #2ecc71; }
     .main { flex: 1; display: grid; grid-template-columns: 1fr 300px; gap: 24px; }
     .game-area { position: relative; border: 3px solid #888; overflow: hidden; }
@@ -77,12 +86,19 @@ export class ScreenComponent implements OnInit {
 
   currentSprite = signal<PixelSprite>(getRandomSprite());
   error = signal('');
+  copied = signal(false);
 
   constructor() {
     effect(() => {
       this.gameState.activePlayerId();
       this.currentSprite.set(getRandomSprite());
     });
+  }
+
+  copyLink(): void {
+    navigator.clipboard.writeText(window.location.href);
+    this.copied.set(true);
+    setTimeout(() => this.copied.set(false), 2000);
   }
 
   async ngOnInit(): Promise<void> {
