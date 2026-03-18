@@ -1,4 +1,5 @@
 import { Component, inject, signal, effect, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { GameStateService } from '../shared/services/game-state.service';
@@ -31,7 +32,9 @@ import { getRandomSprite, PixelSprite } from '../shared/sprites/pixel-sprites';
             <div class="ground">▲ ДНО ▲</div>
           } @else {
             <div class="waiting-label">
-              @switch (gameState.gamePhase()) {
+              @if (error()) {
+                <span style="color:#e74c3c">{{ error() }}</span>
+              } @else @switch (gameState.gamePhase()) {
                 @case ('join') { ОЖИДАНИЕ ПОДКЛЮЧЕНИЯ... }
                 @case ('lobby') { ОЖИДАНИЕ ИГРОКОВ... }
                 @case ('waiting') { ГЕНЕРАЦИЯ ВОПРОСОВ... }
@@ -68,8 +71,10 @@ export class ScreenComponent implements OnInit {
   private ws = inject(WebSocketService);
   private http = inject(HttpClient);
   private config = inject(ConfigService);
+  private route = inject(ActivatedRoute);
 
   currentSprite = signal<PixelSprite>(getRandomSprite());
+  error = signal('');
 
   constructor() {
     effect(() => {
@@ -79,11 +84,19 @@ export class ScreenComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    const code = this.route.snapshot.queryParamMap.get('code');
+    if (!code) {
+      this.error.set('Добавь ?code=XXXXXX в URL');
+      return;
+    }
+
     try {
       const res = await firstValueFrom(
-        this.http.post<{ sessionId: string }>(`${this.config.apiUrl}/sessions`, {})
+        this.http.get<{ sessionId: string }>(`${this.config.apiUrl}/sessions/${code}`)
       );
       this.ws.connect(res.sessionId);
-    } catch { /* retry on reload */ }
+    } catch {
+      this.error.set('Игра не найдена');
+    }
   }
 }
