@@ -1,4 +1,4 @@
 {
-  "apiUrl": "http://localhost:8080",
-  "wsUrl": "ws://localhost:8080"
+  "apiUrl": "https://plata.all-easy.org",
+  "wsUrl": "wss://plata.all-easy.org"
 }
