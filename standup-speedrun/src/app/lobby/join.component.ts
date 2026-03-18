@@ -51,7 +51,7 @@ export class JoinComponent {
 
     try {
       const res = await firstValueFrom(
-        this.http.post<{ sessionId: string }>(`${this.config.apiUrl}/api/sessions`, {})
+        this.http.post<{ sessionId: string }>(`${this.config.apiUrl}/sessions`, {})
       );
 
       this.playerService.playerName.set(playerName);

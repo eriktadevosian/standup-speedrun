@@ -81,7 +81,7 @@ export class ScreenComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       const res = await firstValueFrom(
-        this.http.post<{ sessionId: string }>(`${this.config.apiUrl}/api/sessions`, {})
+        this.http.post<{ sessionId: string }>(`${this.config.apiUrl}/sessions`, {})
       );
       this.ws.connect(res.sessionId);
     } catch { /* retry on reload */ }
