@@ -34,12 +34,14 @@ import { getRandomSprite, PixelSprite } from '../shared/sprites/pixel-sprites';
             <div class="waiting-label">
               @if (error()) {
                 <span style="color:#e74c3c">{{ error() }}</span>
-              } @else @switch (gameState.gamePhase()) {
-                @case ('join') { ОЖИДАНИЕ ПОДКЛЮЧЕНИЯ... }
-                @case ('lobby') { ОЖИДАНИЕ ИГРОКОВ... }
-                @case ('waiting') { ГЕНЕРАЦИЯ ВОПРОСОВ... }
-                @case ('ready') { ГОТОВО К СТАРТУ }
-                @case ('results') { ИГРА ЗАВЕРШЕНА }
+              } @else {
+                @switch (gameState.gamePhase()) {
+                  @case ('join') { ОЖИДАНИЕ ПОДКЛЮЧЕНИЯ... }
+                  @case ('lobby') { ОЖИДАНИЕ ИГРОКОВ... }
+                  @case ('waiting') { ГЕНЕРАЦИЯ ВОПРОСОВ... }
+                  @case ('ready') { ГОТОВО К СТАРТУ }
+                  @case ('results') { ИГРА ЗАВЕРШЕНА }
+                }
               }
             </div>
           }

@@ -16,7 +16,9 @@
       "Bash(curl -s -X POST https://plata.all-easy.org/api/v1/sessions)",
       "Bash(curl -s https://plata.all-easy.org/api/v1/health)",
       "Bash(curl:*)",
-      "Bash(python3 -m json.tool)"
+      "Bash(python3 -m json.tool)",
+      "Bash(npm run:*)",
+      "Bash(zip:*)"
     ]
   }
 }
