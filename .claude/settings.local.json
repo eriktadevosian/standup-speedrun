@@ -9,7 +9,10 @@
       "Bash(npm install:*)",
       "Bash(rm:*)",
       "Bash(git rm:*)",
-      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); p=list\\(d[''''projects''''].keys\\(\\)\\)[0]; print\\(json.dumps\\(d[''''projects''''][p][''''architect''''][''''build''''][''''options''''].get\\(''''assets'''',''''not found''''\\),indent=2\\)\\)\")"
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); p=list\\(d[''''projects''''].keys\\(\\)\\)[0]; print\\(json.dumps\\(d[''''projects''''][p][''''architect''''][''''build''''][''''options''''].get\\(''''assets'''',''''not found''''\\),indent=2\\)\\)\")",
+      "Bash(git remote:*)",
+      "Bash(ssh:*)",
+      "Bash(git push:*)"
     ]
   }
 }
