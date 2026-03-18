@@ -1,0 +1,241 @@
+<h2>Пиксельные блоки: какой подход?</h2>
+<p class="subtitle">Вместо скучного прямоугольника — пиксельарт-фигурки с вопросами внутри</p>
+
+<div class="cards">
+  <!-- Option A: Тематические предметы -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #1a1a2e; padding: 24px; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+      <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+      <style>
+        .px { image-rendering: pixelated; }
+        @keyframes fall-a1 { 0% { transform: translateY(-10px); } 100% { transform: translateY(10px); } }
+        @keyframes fall-a2 { 0% { transform: translateY(-6px); } 100% { transform: translateY(6px); } }
+        @keyframes steam { 0%,100% { opacity: 0.3; transform: translateY(0); } 50% { opacity: 0.8; transform: translateY(-4px); } }
+      </style>
+
+      <!-- Кружка кофе -->
+      <div style="display: flex; align-items: center; gap: 16px; animation: fall-a1 2s ease-in-out infinite alternate;">
+        <div style="position: relative;">
+          <div style="font-size: 40px; line-height: 1;">☕</div>
+          <div style="position: absolute; top: -8px; left: 12px; color: #888; font-size: 10px; animation: steam 1.5s infinite;">~</div>
+        </div>
+        <div style="border: 3px solid #2ecc71; background: #16213e; padding: 8px; max-width: 150px;">
+          <div style="font-family: 'Press Start 2P', monospace; color: #2ecc71; font-size: 7px; line-height: 1.6;">Что сделал вчера?</div>
+        </div>
+      </div>
+
+      <!-- Баг -->
+      <div style="display: flex; align-items: center; gap: 16px; animation: fall-a2 1.8s ease-in-out infinite alternate-reverse;">
+        <div style="font-size: 40px; line-height: 1;">🐛</div>
+        <div style="border: 3px solid #e74c3c; background: #16213e; padding: 8px; max-width: 150px;">
+          <div style="font-family: 'Press Start 2P', monospace; color: #e74c3c; font-size: 7px; line-height: 1.6;">Есть блокеры?</div>
+        </div>
+      </div>
+
+      <!-- Ракета -->
+      <div style="display: flex; align-items: center; gap: 16px; animation: fall-a1 2.2s ease-in-out infinite alternate;">
+        <div style="font-size: 40px; line-height: 1;">🚀</div>
+        <div style="border: 3px solid #3498db; background: #16213e; padding: 8px; max-width: 150px;">
+          <div style="font-family: 'Press Start 2P', monospace; color: #3498db; font-size: 7px; line-height: 1.6;">Когда деплой?</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A: Тематические эмодзи</h3>
+      <p>Каждый вопрос привязан к эмодзи-предмету: ☕ кофе, 🐛 баг, 🚀 деплой, 💻 код, 🔥 хотфикс. Рандом из пула 10-15 иконок. Просто и узнаваемо.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Pixel art фигуры тетриса -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #1a1a2e; padding: 24px; display: flex; flex-direction: column; align-items: center; gap: 12px;">
+      <style>
+        .tetris-cell { width: 12px; height: 12px; display: inline-block; }
+        @keyframes fall-b { 0% { transform: translateY(-8px); } 100% { transform: translateY(8px); } }
+      </style>
+
+      <!-- T-block -->
+      <div style="display: flex; align-items: center; gap: 16px; animation: fall-b 2s ease-in-out infinite alternate;">
+        <div style="display: flex; flex-direction: column; align-items: center;">
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: #9b59b6;"></div>
+            <div class="tetris-cell" style="background: #9b59b6;"></div>
+            <div class="tetris-cell" style="background: #9b59b6;"></div>
+          </div>
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: transparent;"></div>
+            <div class="tetris-cell" style="background: #9b59b6;"></div>
+            <div class="tetris-cell" style="background: transparent;"></div>
+          </div>
+        </div>
+        <div style="border: 3px solid #9b59b6; background: #16213e; padding: 8px; max-width: 140px;">
+          <div style="font-family: 'Press Start 2P', monospace; color: #9b59b6; font-size: 7px; line-height: 1.6;">Что сделал вчера?</div>
+        </div>
+      </div>
+
+      <!-- L-block -->
+      <div style="display: flex; align-items: center; gap: 16px; animation: fall-b 1.7s ease-in-out infinite alternate-reverse;">
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: #e67e22;"></div>
+            <div class="tetris-cell" style="background: transparent;"></div>
+          </div>
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: #e67e22;"></div>
+            <div class="tetris-cell" style="background: transparent;"></div>
+          </div>
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: #e67e22;"></div>
+            <div class="tetris-cell" style="background: #e67e22;"></div>
+          </div>
+        </div>
+        <div style="border: 3px solid #e67e22; background: #16213e; padding: 8px; max-width: 140px;">
+          <div style="font-family: 'Press Start 2P', monospace; color: #e67e22; font-size: 7px; line-height: 1.6;">Есть блокеры?</div>
+        </div>
+      </div>
+
+      <!-- Z-block -->
+      <div style="display: flex; align-items: center; gap: 16px; animation: fall-b 2.1s ease-in-out infinite alternate;">
+        <div style="display: flex; flex-direction: column;">
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: #e74c3c;"></div>
+            <div class="tetris-cell" style="background: #e74c3c;"></div>
+            <div class="tetris-cell" style="background: transparent;"></div>
+          </div>
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: transparent;"></div>
+            <div class="tetris-cell" style="background: #e74c3c;"></div>
+            <div class="tetris-cell" style="background: #e74c3c;"></div>
+          </div>
+        </div>
+        <div style="border: 3px solid #e74c3c; background: #16213e; padding: 8px; max-width: 140px;">
+          <div style="font-family: 'Press Start 2P', monospace; color: #e74c3c; font-size: 7px; line-height: 1.6;">Когда деплой?</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B: Тетрис-фигуры</h3>
+      <p>Классические тетромино (T, L, Z, S, I, O, J) — каждый вопрос падает как фигура тетриса с текстом рядом. Цвет фигуры = цвет рамки вопроса. Максимальный тетрис-вайб.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Mix -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="background: #1a1a2e; padding: 24px; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+      <style>
+        @keyframes fall-c { 0% { transform: translateY(-8px) rotate(-1deg); } 100% { transform: translateY(8px) rotate(1deg); } }
+      </style>
+
+      <!-- Кружка из пикселей -->
+      <div style="display: flex; align-items: center; gap: 16px; animation: fall-c 2s ease-in-out infinite alternate;">
+        <div style="display: flex; flex-direction: column; gap: 0;">
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: transparent;"></div>
+            <div class="tetris-cell" style="background: #f1c40f;"></div>
+            <div class="tetris-cell" style="background: #f1c40f;"></div>
+            <div class="tetris-cell" style="background: #f1c40f;"></div>
+          </div>
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: transparent;"></div>
+            <div class="tetris-cell" style="background: #f1c40f;"></div>
+            <div class="tetris-cell" style="background: transparent;"></div>
+            <div class="tetris-cell" style="background: #f1c40f;"></div>
+            <div class="tetris-cell" style="background: #e67e22;"></div>
+          </div>
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: transparent;"></div>
+            <div class="tetris-cell" style="background: #f1c40f;"></div>
+            <div class="tetris-cell" style="background: #8B6914;"></div>
+            <div class="tetris-cell" style="background: #f1c40f;"></div>
+            <div class="tetris-cell" style="background: #e67e22;"></div>
+          </div>
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: transparent;"></div>
+            <div class="tetris-cell" style="background: #f1c40f;"></div>
+            <div class="tetris-cell" style="background: #f1c40f;"></div>
+            <div class="tetris-cell" style="background: #f1c40f;"></div>
+          </div>
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: #e67e22;"></div>
+            <div class="tetris-cell" style="background: #e67e22;"></div>
+            <div class="tetris-cell" style="background: #e67e22;"></div>
+            <div class="tetris-cell" style="background: #e67e22;"></div>
+            <div class="tetris-cell" style="background: #e67e22;"></div>
+          </div>
+        </div>
+        <div style="border: 3px solid #f1c40f; background: #16213e; padding: 8px; max-width: 140px;">
+          <div style="font-family: 'Press Start 2P', monospace; color: #f1c40f; font-size: 7px; line-height: 1.6;">Что сделал вчера?</div>
+        </div>
+      </div>
+
+      <!-- Ноутбук из пикселей -->
+      <div style="display: flex; align-items: center; gap: 16px; animation: fall-c 1.8s ease-in-out infinite alternate-reverse;">
+        <div style="display: flex; flex-direction: column; gap: 0;">
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: #3498db;"></div>
+            <div class="tetris-cell" style="background: #3498db;"></div>
+            <div class="tetris-cell" style="background: #3498db;"></div>
+            <div class="tetris-cell" style="background: #3498db;"></div>
+          </div>
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: #3498db;"></div>
+            <div class="tetris-cell" style="background: #1a1a2e;"></div>
+            <div class="tetris-cell" style="background: #1a1a2e;"></div>
+            <div class="tetris-cell" style="background: #3498db;"></div>
+          </div>
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: #3498db;"></div>
+            <div class="tetris-cell" style="background: #3498db;"></div>
+            <div class="tetris-cell" style="background: #3498db;"></div>
+            <div class="tetris-cell" style="background: #3498db;"></div>
+          </div>
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: transparent;"></div>
+            <div class="tetris-cell" style="background: #2980b9;"></div>
+            <div class="tetris-cell" style="background: #2980b9;"></div>
+          </div>
+        </div>
+        <div style="border: 3px solid #3498db; background: #16213e; padding: 8px; max-width: 140px;">
+          <div style="font-family: 'Press Start 2P', monospace; color: #3498db; font-size: 7px; line-height: 1.6;">Есть блокеры?</div>
+        </div>
+      </div>
+
+      <!-- Сердце из пикселей -->
+      <div style="display: flex; align-items: center; gap: 16px; animation: fall-c 2.2s ease-in-out infinite alternate;">
+        <div style="display: flex; flex-direction: column; gap: 0;">
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: transparent;"></div>
+            <div class="tetris-cell" style="background: #e74c3c;"></div>
+            <div class="tetris-cell" style="background: transparent;"></div>
+            <div class="tetris-cell" style="background: #e74c3c;"></div>
+          </div>
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: #e74c3c;"></div>
+            <div class="tetris-cell" style="background: #e74c3c;"></div>
+            <div class="tetris-cell" style="background: #e74c3c;"></div>
+            <div class="tetris-cell" style="background: #e74c3c;"></div>
+            <div class="tetris-cell" style="background: #e74c3c;"></div>
+          </div>
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: transparent;"></div>
+            <div class="tetris-cell" style="background: #e74c3c;"></div>
+            <div class="tetris-cell" style="background: #e74c3c;"></div>
+            <div class="tetris-cell" style="background: #e74c3c;"></div>
+          </div>
+          <div style="display: flex;">
+            <div class="tetris-cell" style="background: transparent;"></div>
+            <div class="tetris-cell" style="background: transparent;"></div>
+            <div class="tetris-cell" style="background: #e74c3c;"></div>
+          </div>
+        </div>
+        <div style="border: 3px solid #e74c3c; background: #16213e; padding: 8px; max-width: 140px;">
+          <div style="font-family: 'Press Start 2P', monospace; color: #e74c3c; font-size: 7px; line-height: 1.6;">Когда деплой?</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C: Pixel Art предметы</h3>
+      <p>Предметы нарисованные пикселями: кружка кофе, ноутбук, сердце, баг, ракета. Каждый ~5x5 пикселей, рисуются через CSS Grid. Максимально стильно, но чуть больше работы.</p>
+    </div>
+  </div>
+</div>
