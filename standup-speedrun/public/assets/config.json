@@ -1,4 +1,4 @@
 {
   "apiUrl": "https://plata.all-easy.org/api/v1",
-  "wsUrl": "wss://plata.all-easy.org/api/v1"
+  "wsUrl": "wss://plata.all-easy.org"
 }

@@ -58,29 +58,26 @@ export class JoinComponent {
       this.playerService.sessionId.set(res.sessionId);
       this.playerService.save();
 
-      this.ws.connect(res.sessionId, playerName);
-
-      await new Promise<void>((resolve, reject) => {
-        const check = setInterval(() => {
-          if (this.ws.connectionState() === 'connected') {
-            clearInterval(check);
+      // Subscribe BEFORE connecting to avoid race condition
+      const connected = new Promise<void>((resolve, reject) => {
+        const timeout = setTimeout(() => { sub.unsubscribe(); reject(new Error('timeout')); }, 5000);
+        const sub = this.ws.messages$.subscribe(msg => {
+          if (msg.type === 'lobby_update') {
+            const me = msg.payload.players.find(p => p.name === playerName);
+            if (me) {
+              this.playerService.playerId.set(me.id);
+              this.playerService.isHost.set(me.isHost);
+              this.playerService.save();
+            }
+            clearTimeout(timeout);
+            sub.unsubscribe();
             resolve();
           }
-        }, 100);
-        setTimeout(() => { clearInterval(check); reject(new Error('timeout')); }, 5000);
+        });
       });
 
-      const sub = this.ws.messages$.subscribe(msg => {
-        if (msg.type === 'lobby_update') {
-          const me = msg.payload.players.find(p => p.name === playerName);
-          if (me) {
-            this.playerService.playerId.set(me.id);
-            this.playerService.save();
-          }
-          sub.unsubscribe();
-        }
-      });
-
+      this.ws.connect(res.sessionId, playerName);
+      await connected;
       this.router.navigate(['/lobby']);
     } catch {
       this.error.set('Не удалось подключиться');
