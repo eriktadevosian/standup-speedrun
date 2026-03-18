@@ -1,0 +1,13 @@
+services:
+  frontend:
+    build: ./standup-speedrun
+    ports: ["4200:80"]
+    environment:
+      API_URL: http://mock-server:8080
+      WS_URL: ws://mock-server:8080
+    depends_on:
+      - mock-server
+
+  mock-server:
+    build: ./mock-server
+    ports: ["8080:8080"]
