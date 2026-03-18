@@ -6,12 +6,14 @@ export class PlayerService {
   playerName = signal<string | null>(null);
   isHost = signal<boolean>(false);
   sessionId = signal<string | null>(null);
+  sessionCode = signal<string | null>(null);
 
   save(): void {
     const data = {
       playerId: this.playerId(),
       playerName: this.playerName(),
       sessionId: this.sessionId(),
+      sessionCode: this.sessionCode(),
     };
     sessionStorage.setItem('player', JSON.stringify(data));
   }
@@ -24,6 +26,7 @@ export class PlayerService {
       this.playerId.set(data.playerId);
       this.playerName.set(data.playerName);
       this.sessionId.set(data.sessionId);
+      this.sessionCode.set(data.sessionCode);
       return !!data.sessionId;
     } catch {
       return false;
@@ -35,6 +38,7 @@ export class PlayerService {
     this.playerName.set(null);
     this.isHost.set(false);
     this.sessionId.set(null);
+    this.sessionCode.set(null);
     sessionStorage.removeItem('player');
   }
 }

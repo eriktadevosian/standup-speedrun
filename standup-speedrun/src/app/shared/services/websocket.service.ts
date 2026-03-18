@@ -44,9 +44,11 @@ export class WebSocketService {
     this.connectionState.set('connecting');
     const nameParam = this.playerName ? `?name=${encodeURIComponent(this.playerName)}` : '?name=__screen__';
     const url = `${this.config.wsUrl}/ws/${this.sessionId}${nameParam}`;
+    console.log('[WS] Connecting to:', url);
     this.ws = new WebSocket(url);
 
     this.ws.onopen = () => {
+      console.log('[WS] Connected');
       this.connectionState.set('connected');
       this.reconnectAttempts = 0;
       this.flushBuffer();
@@ -59,12 +61,14 @@ export class WebSocketService {
       } catch { /* ignore malformed */ }
     };
 
-    this.ws.onclose = () => {
+    this.ws.onclose = (event) => {
+      console.log('[WS] Closed:', event.code, event.reason);
       this.connectionState.set('disconnected');
       this.tryReconnect();
     };
 
-    this.ws.onerror = () => {
+    this.ws.onerror = (err) => {
+      console.error('[WS] Error:', err);
       this.ws?.close();
     };
   }

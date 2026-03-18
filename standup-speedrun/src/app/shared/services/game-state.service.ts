@@ -37,6 +37,9 @@ export class GameStateService {
       switch (event.type) {
         case 'lobby_update':
           this.players.set(event.payload.players);
+          if ((event.payload as any).code) {
+            this.playerService.sessionCode.set((event.payload as any).code);
+          }
           if (this.gamePhase() === 'join') this.gamePhase.set('lobby');
           const me = event.payload.players.find(p => p.id === this.playerService.playerId());
           if (me) this.playerService.isHost.set(me.isHost);
