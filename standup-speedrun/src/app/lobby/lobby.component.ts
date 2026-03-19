@@ -1,4 +1,4 @@
-import { Component, inject, effect } from '@angular/core';
+import { Component, inject, effect, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { GameStateService } from '../shared/services/game-state.service';
 import { PlayerService } from '../shared/services/player.service';
@@ -15,6 +15,9 @@ import { HostPanelComponent } from './host-panel.component';
         <div class="code-display">
           <div class="code-label">КОД ИГРЫ:</div>
           <div class="code-value">{{ playerService.sessionCode() }}</div>
+          <button class="copy-btn" (click)="copyScreenLink()">
+            {{ copied() ? 'СКОПИРОВАНО!' : 'ССЫЛКА НА ЭКРАН' }}
+          </button>
         </div>
       }
       <div class="players">
@@ -41,7 +44,9 @@ import { HostPanelComponent } from './host-panel.component';
     .player.host { border-color: #f1c40f; }
     .code-display { text-align: center; margin-bottom: 8px; }
     .code-label { color: #888; font-family: 'Press Start 2P', monospace; font-size: 8px; margin-bottom: 4px; }
-    .code-value { color: #f1c40f; font-family: 'Press Start 2P', monospace; font-size: 24px; letter-spacing: 4px; }
+    .code-value { color: #f1c40f; font-family: 'Press Start 2P', monospace; font-size: 24px; letter-spacing: 4px; margin-bottom: 8px; }
+    .copy-btn { font-family: 'Press Start 2P', monospace; font-size: 8px; padding: 8px 16px; background: #0f3460; color: #3498db; border: 2px solid #3498db; cursor: pointer; }
+    .copy-btn:hover { background: #16213e; }
     .count { color: #888; font-family: 'Press Start 2P', monospace; font-size: 10px; }
     @keyframes blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }
     .waiting { color: #888; font-family: 'Press Start 2P', monospace; font-size: 10px; animation: blink 2s infinite; }
@@ -52,11 +57,22 @@ export class LobbyComponent {
   playerService = inject(PlayerService);
   private router = inject(Router);
 
+  copied = signal(false);
+
   constructor() {
     effect(() => {
       if (this.gameState.gamePhase() === 'playing') {
         this.router.navigate(['/play']);
       }
+    });
+  }
+
+  copyScreenLink(): void {
+    const code = this.playerService.sessionCode();
+    const url = `${window.location.origin}/screen?code=${code}`;
+    navigator.clipboard.writeText(url).then(() => {
+      this.copied.set(true);
+      setTimeout(() => this.copied.set(false), 2000);
     });
   }
 }
